@@ -1,43 +1,52 @@
-import { View, Image, StyleSheet, useWindowDimensions } from 'react-native';
-import React from 'react';
-import Logo from "../../../assets/images/logo-bg-removed.png";
+import { View, Text , Image,StyleSheet,useWindowDimensions} from 'react-native'
+import React,{useState} from 'react'
+import Logo from '../../../assets/images/Logo.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
-import HomePage from '../HomePage';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
+const signIn = () => {
 
-const SignInScreen = () => {
-  const {height} = useWindowDimensions();
-  const auth = () =>{
-    console.warn("login");
-    navigation.navigate("Home");
-  }
+  const {height}=useWindowDimensions();
   const navigation = useNavigation();
+  const {Username,setUsername}=useState('');
+  const {Password,setPassword}=useState('');
+  const onSignInPressed=()=>{
+    console.warn("Sign In");
+  }
+  const onForgetPasswordPressed = () =>{
+    
+    navigation.navigate("ForgetPassword");
+  }
+  const onSignUpPressed =() =>{
+    
+    navigation.navigate("SignUp");
+  }
+  
   return (
     <View style={styles.root}>
-      <Image 
-          source={Logo} 
-          style={[styles.logo, {height: height*0.5}]}/>
-      <CustomInput placeholder={"UserName"}/>
-      <CustomInput placeholder={"Password"}/>
-      <CustomButton text="Login" onPress={auth}/>
+      <Image source={Logo} style={[styles.logo,{height:height*.3}]} />
+      <CustomInput placeholder="Username" value={Username} setValue={setUsername}></CustomInput>
+      <CustomInput placeholder="Password" value={Password} setValue={setPassword} secureTextEntry={true}></CustomInput>
+      <CustomButton text="Sign In" onPress={onSignInPressed} type="PRIMARY"></CustomButton>
+      <CustomButton text="Forget Password" onPress={onForgetPasswordPressed} type="TERTIARY"></CustomButton>
+      <CustomButton text="Sign Up" onPress={onSignUpPressed} type="ad"></CustomButton>
+
     </View>
   )
 }
-
 const styles = StyleSheet.create({
-  root: {
+  root:({
     alignItems: 'center',
-    backgroundColor: '#faf7e6',
-    flex: 3,
-  },
+    padding: 20,
+
+  }),
   logo: {
     width: '70%',
     maxWidth: 300,
-    height: 500,
-  }
-});
-
-
-export default SignInScreen
+    height:100,
+    maxHeight:200,
+  },
+  
+})
+export default signIn;
