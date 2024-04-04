@@ -29,7 +29,7 @@ const SignInScreen = () => {
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
-    backgroundColor: '#faf7e6',
+    backgroundColor: '#FFFFFF',
     flex: 3,
   },
   logo: {
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SignInScreen
+export default SignInScreen;

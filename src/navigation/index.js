@@ -8,11 +8,13 @@ import SignInScreen from '../screens/SignInScreen';
 import HomePage from '../screens/HomePage';
 import Academics from '../screens/Academics';
 import Profile from '../screens/Profile';
+import ForgetPassword from '../screens/ForgetPassword/ForgetPassword';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons'; // Importing the home icon
 import { faBook, faUser } from '@fortawesome/free-solid-svg-icons';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
 
 const Navigation = () => {
   return (
@@ -20,6 +22,7 @@ const Navigation = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Intro" component={IntroPage} />
         <Stack.Screen name="Signin" component={SignInScreen} />
+        <Stack.Screen name="forgotpass" component={ForgetPassword} />
         <Stack.Screen name="Home" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -30,7 +33,7 @@ const houseName = 'name';
 
 const Tabs = () => {
   return (
-    <Tab.Navigator initialRouteName={houseName}>
+    <Tab.Navigator initialRouteName={houseName} screenOptions={{tabBarShowLabel: false, headerShown:false }}>
       <Tab.Screen
         name="Home"
         component={HomePage}

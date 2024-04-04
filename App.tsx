@@ -20,7 +20,7 @@ const App = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: 'f9f9f9'
+    backgroundColor: '#FFFFFF'
     },
 });
 

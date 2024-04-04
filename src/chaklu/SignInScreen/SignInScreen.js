@@ -1,8 +1,8 @@
 import { View, Text , Image,StyleSheet,useWindowDimensions} from 'react-native'
 import React,{useState} from 'react'
-import Logo from '../../../assets/images/Logo.png';
-import CustomInput from '../../components/CustomInputChaklu';
-import CustomButton from '../../components/CustomButtonChaklu';
+// import Logo from "../../assets/images/logo-bg-removed.png";
+// import CustomInput from '../../components/CustomInputChaklu';
+// import CustomButton from '../../components/CustomButtonChaklu';
 import {useNavigation} from '@react-navigation/native';
 
 const signIn = () => {
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
   
 })
-export default signIn;
+export default SignIn;
