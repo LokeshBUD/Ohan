@@ -6,6 +6,8 @@ import Logo from '../../../assets/images/logo-bg-removed.png';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import auth from '@react-native-firebase/auth';
+import Navigation from '../../navigation';
+import { useNavigation } from '@react-navigation/native';
 
 const SignUpPage = () => {
   const { height } = useWindowDimensions();
@@ -14,6 +16,8 @@ const SignUpPage = () => {
   const [Password, setPassword] = useState("");
   const [PasswordRepeat, setPasswordRepeat] = useState("");
   
+  const navigation = useNavigation()
+
   const onRegisterPressed = () => {
     if (Password !== PasswordRepeat) {
       Alert.alert("Passwords do not match");
@@ -22,6 +26,8 @@ const SignUpPage = () => {
     auth().createUserWithEmailAndPassword(email, Password)
       .then(() => {
         Alert.alert("Registration successful");
+      }).then(()=>{
+        navigation.navigate(`Signin`);
       })
       .catch((error) => {
         console.warn(error.message);
