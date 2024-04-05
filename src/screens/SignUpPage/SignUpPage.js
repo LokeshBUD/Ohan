@@ -1,57 +1,68 @@
-import { View, Text , Image,StyleSheet,useWindowDimensions, Alert} from 'react-native'
-import React,{useState} from 'react'
+// SignUpPage.js
+
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, useWindowDimensions, Alert } from 'react-native';
 import Logo from '../../../assets/images/logo-bg-removed.png';
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-
-
 import auth from '@react-native-firebase/auth';
 
 const SignUpPage = () => {
-  const {height}=useWindowDimensions();
-  const {Username,setUsername}=useState('');
-  const {email,setEmail}=useState('');
+  const { height } = useWindowDimensions();
+  const [Username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [PasswordRepeat, setPasswordRepeat] = useState("");
   
-  const {Password,setPassword}=useState('');
-  const {PasswordRepeat,setPasswordRepeat}=useState('');
-  
-  const onRegisterPressed =() =>{
-    auth().createUserWithEmailAndPassword("test@gmail.com","password").then(() => {
-      Alert.alert("registration succesful")
-    })
-    .catch((err)=>{
-      console.warn(err);
-    })
-   
+  const onRegisterPressed = () => {
+    if (Password !== PasswordRepeat) {
+      Alert.alert("Passwords do not match");
+      return;
+    }
+    auth().createUserWithEmailAndPassword(email, Password)
+      .then(() => {
+        Alert.alert("Registration successful");
+      })
+      .catch((error) => {
+        console.warn(error.message);
+      });
   }
-  const onterms =()=>{
+
+  const onterms = () => {
     console.warn('terms');
   }
-  const onprivacy=()=>{
+
+  const onprivacy = () => {
     console.warn('privacy');
   }
+
+  console.log(email + "  " + Password)
   
   return (
     <View style={styles.root}>
-      <Image source={Logo} style={[styles.logo,{height:height*.3}]} />
+      <Image source={Logo} style={[styles.logo, { height: height * .3 }]} />
       <Text style={styles.title}>Create an account</Text>
-      <CustomInput placeholder="Username" value={Username} setValue={setUsername}></CustomInput>
-      <CustomInput placeholder="Email" value={email} setValue={setEmail}></CustomInput>
-      <CustomInput placeholder="Password" value={Password} setValue={setPassword} secureTextEntry={true}></CustomInput>
-      <CustomInput placeholder="Repeat Password" value={PasswordRepeat} setValue={setPasswordRepeat} secureTextEntry={true}></CustomInput>
+      <CustomInput placeholder="Username" value={Username} onChangeText={text => setUsername(text)} />
+      <CustomInput placeholder="Email" value={email} onChangeText={text => setEmail(text)} />
+      <CustomInput placeholder="Password" value={Password} onChangeText={text => setPassword(text)} secureTextEntry />
+      <CustomInput placeholder="Repeat Password" value={PasswordRepeat} onChangeText={text => setPasswordRepeat(text)} secureTextEntry />
       
-      <CustomButton text="Register" onPress={onRegisterPressed}></CustomButton>
-      <Text style={styles.text}>By registering, you confirm that you accept our{` `}<Text style={styles.link} onPress={onterms}>Terms of Use</Text>{' '}and{` `}<Text style={styles.link} onPress={onprivacy}>Privacy Policy</Text></Text>
-
+      <CustomButton text="Register" onPress={onRegisterPressed} />
+      <Text style={styles.text}>By registering, you confirm that you accept our{' '}
+        <Text style={styles.link} onPress={onterms}>Terms of Use</Text> and{' '}
+        <Text style={styles.link} onPress={onprivacy}>Privacy Policy</Text>
+      </Text>
     </View>
-  )
+  );
 }
+
 const styles = StyleSheet.create({
-  root:({
+  root: {
     alignItems: 'center',
     padding: 20,
-
-  }),
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
   logo: {
     width: '70%',
     maxWidth: 300,
@@ -67,13 +78,10 @@ const styles = StyleSheet.create({
   text:{
     color:'gray',
     marginVertical:10,
-
   },
   link:{
     color:'#FDB075',
-
   }
-  
-})
+});
 
-export default SignUpPage
+export default SignUpPage;

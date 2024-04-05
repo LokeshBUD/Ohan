@@ -1,16 +1,18 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
 
-const CustomInput = ({value, setValue,placeholder}) => {
+const CustomInput = ({ placeholder, value, onChangeText, secureTextEntry }) => {
   return (
-    <View style={sytles.container}>
-      <TextInput 
-        placeholder={placeholder} 
-        onChangeText={setValue} style={sytles.input}/>
-    </View>
-  )
+    <TextInput
+      style={styles.input}
+      placeholder={placeholder}
+      value={value}
+      onChangeText={onChangeText}
+      secureTextEntry={secureTextEntry}
+    />
+  );
 }
-const sytles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         margin: 5,
