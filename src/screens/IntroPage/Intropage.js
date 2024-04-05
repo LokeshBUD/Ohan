@@ -13,7 +13,7 @@ const Intropage = () => {
       navigation.navigate(`Signin`);
   }
   const onSignUpPress = () =>{
-      navigation.navigate(`forgotpass`);
+      navigation.navigate(`SignUp`);
   }
   const onNoSign = () =>{
     console.warn("lets go");

@@ -8,6 +8,7 @@ import SignInScreen from '../screens/SignInScreen';
 import HomePage from '../screens/HomePage';
 import Academics from '../screens/Academics';
 import Profile from '../screens/Profile';
+import SignUpPage from '../screens/SignUpPage';
 import ForgetPassword from '../screens/ForgetPassword/ForgetPassword';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons'; // Importing the home icon
@@ -23,6 +24,7 @@ const Navigation = () => {
         <Stack.Screen name="Intro" component={IntroPage} />
         <Stack.Screen name="Signin" component={SignInScreen} />
         <Stack.Screen name="forgotpass" component={ForgetPassword} />
+        <Stack.Screen name='SignUp' component={SignUpPage} />
         <Stack.Screen name="Home" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
