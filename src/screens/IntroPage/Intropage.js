@@ -22,7 +22,7 @@ const Intropage = () => {
     <View style={styles.root}>
       <Image source={Logo} />
       <CustomButton text="Login" onPress={onLoginPress}></CustomButton>
-      <CustomButton text="Sign In" onPress={onSignUpPress}></CustomButton>
+      <CustomButton text="Sign up" onPress={onSignUpPress}></CustomButton>
       <CustomButton text="Continue without Signing in" onPress={onNoSign} type='T'></CustomButton>
     </View>
   )
