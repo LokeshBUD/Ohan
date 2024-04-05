@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.navi.app-mergeDebugResources-39:/values-land/values-land.xml",
+            "outputFile": "com.navi.app-mergeDebugResources-40:/values-land/values-land.xml",
             "map": [
                 {
                     "source": "/Users/lokeshbudda/.gradle/caches/transforms-3/858dc591faff319c774fa62ec5f4cdb2/transformed/appcompat-1.6.1/res/values-land/values-land.xml",

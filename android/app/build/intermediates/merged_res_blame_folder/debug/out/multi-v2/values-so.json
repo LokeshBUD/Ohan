@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.navi.app-mergeDebugResources-39:/values-so/values-so.xml",
+            "outputFile": "com.navi.app-mergeDebugResources-40:/values-so/values-so.xml",
             "map": [
                 {
                     "source": "/Users/lokeshbudda/.gradle/caches/transforms-3/64cc0f09482b7eba658e985cab9ea8b8/transformed/jetified-react-android-0.73.6-debug/res/values-so/values-so.xml",
