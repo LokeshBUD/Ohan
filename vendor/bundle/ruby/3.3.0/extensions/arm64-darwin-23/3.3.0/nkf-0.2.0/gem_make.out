@@ -1,0 +1,18 @@
+current directory: /Users/lokeshbudda/Desktop/Backupfolder/temp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+/Users/lokeshbudda/.rbenv/versions/3.3.0/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/lokeshbudda/Desktop/Backupfolder/temp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20240407-40003-fwayoy sitelibdir\=./.gem.20240407-40003-fwayoy clean
+
+current directory: /Users/lokeshbudda/Desktop/Backupfolder/temp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20240407-40003-fwayoy sitelibdir\=./.gem.20240407-40003-fwayoy
+compiling nkf.c
+linking shared-object nkf.bundle
+
+current directory: /Users/lokeshbudda/Desktop/Backupfolder/temp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20240407-40003-fwayoy sitelibdir\=./.gem.20240407-40003-fwayoy install
+/opt/homebrew/bin/ginstall -c -m 0755 nkf.bundle ./.gem.20240407-40003-fwayoy
+
+current directory: /Users/lokeshbudda/Desktop/Backupfolder/temp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20240407-40003-fwayoy sitelibdir\=./.gem.20240407-40003-fwayoy clean

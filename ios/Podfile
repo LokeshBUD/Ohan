@@ -27,8 +27,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'navi' do
-  
+target 'temp' do
   config = use_native_modules!
   pod 'nanopb', '< 2.30910.0'
   pod 'gRPC', '1.62.0'
@@ -42,7 +41,7 @@ target 'navi' do
   
   flags = get_default_flags()
   use_frameworks! :linkage => :static
-  
+
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => flags[:hermes_enabled],
@@ -56,7 +55,7 @@ target 'navi' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'naviTests' do
+  target 'tempTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -70,4 +69,3 @@ target 'navi' do
     )
   end
 end
-

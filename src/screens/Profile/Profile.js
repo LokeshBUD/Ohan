@@ -4,6 +4,9 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { request, PERMISSIONS } from 'react-native-permissions';
 import { useNavigation } from '@react-navigation/native';
 
+import firestore from '@react-native-firebase/firestore';
+
+
 const Profile = () => {
   // Dummy user data
   const user = {
@@ -19,7 +22,12 @@ const Profile = () => {
 
   const [image, setImage] = useState(null);
 
+  const getdata = async() => {
+    const usersCollection = firestore().collection('Users').get();
+    console.log((await usersCollection).docs[0].data())
+  }
   useEffect(() => {
+    getdata()
     if (Platform.OS === 'android') {
       askForPermissions(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
     } else if (Platform.OS === 'ios') {
