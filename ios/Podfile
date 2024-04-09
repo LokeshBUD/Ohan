@@ -32,6 +32,7 @@ target 'temp' do
   pod 'nanopb', '< 2.30910.0'
   pod 'gRPC', '1.62.0'
   pod 'gRPC-Core', '1.62.0'
+  pod 'RNGoogleSignin', :path => '../node_modules/@react-native-google-signin/google-signin'
   
   # Add Firebase Pods with modular headers and enable bridged/compatibility mode
   pod 'Firebase', :modular_headers => true

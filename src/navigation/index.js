@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,11 +10,10 @@ import Profile from '../screens/Profile';
 import SignUpPage from '../screens/SignUpPage';
 import ForgetPassword from '../screens/ForgetPassword/ForgetPassword';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons'; // Importing the home icon
-import { faBook, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBook, faUser } from '@fortawesome/free-solid-svg-icons';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
 
 const Navigation = () => {
   return (
@@ -25,17 +23,23 @@ const Navigation = () => {
         <Stack.Screen name="Signin" component={SignInScreen} />
         <Stack.Screen name="forgotpass" component={ForgetPassword} />
         <Stack.Screen name='SignUp' component={SignUpPage} />
+        <Stack.Screen name='Profile' component={Profile} />
         <Stack.Screen name="Home" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-const houseName = 'name';
-
-const Tabs = () => {
+const Tabs = ({ route }) => {
+  // Extract userData from the route params
+  const { userData } = route.params || {};
+  console.log(userData)
   return (
-    <Tab.Navigator initialRouteName={houseName} screenOptions={{tabBarShowLabel: false, headerShown:false }}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{ tabBarShowLabel: false, headerShown: false }}
+      initialParams={{ userData: userData }} // Pass userData to the tab navigator
+    >
       <Tab.Screen
         name="Home"
         component={HomePage}
@@ -56,7 +60,7 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="profile"
-        component={Profile}
+        component={props => <Profile {...props} userData={userData} />}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon icon={faUser} color={color} size={size} />
