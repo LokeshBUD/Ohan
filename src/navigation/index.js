@@ -10,7 +10,7 @@ import Profile from '../screens/Profile';
 import SignUpPage from '../screens/SignUpPage';
 import ForgetPassword from '../screens/ForgetPassword/ForgetPassword';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHome, faBook, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBook, faUser, faLeaf } from '@fortawesome/free-solid-svg-icons';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -18,13 +18,13 @@ const Tab = createBottomTabNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Intro" component={IntroPage} />
-        <Stack.Screen name="Signin" component={SignInScreen} />
-        <Stack.Screen name="forgotpass" component={ForgetPassword} />
-        <Stack.Screen name='SignUp' component={SignUpPage} />
-        <Stack.Screen name='Profile' component={Profile} />
-        <Stack.Screen name="Home" component={Tabs} />
+      <Stack.Navigator options={{headerShown:true,title:""}}>
+        <Stack.Screen name="Intro" component={IntroPage}  options={{headerShown:false,title:""}}/>
+        <Stack.Screen name="Signin" component={SignInScreen} options={{title:""}}/>
+        <Stack.Screen name="forgotpass" component={ForgetPassword} options={{title:""}}/>
+        <Stack.Screen name='SignUp' component={SignUpPage} options={{title:""}}/>
+        <Stack.Screen name='Profile' component={Profile} options={{title:""}}/>
+        <Stack.Screen name="Home" component={Tabs} options={{headerShown:false,title:""}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

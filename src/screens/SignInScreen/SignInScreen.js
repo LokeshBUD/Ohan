@@ -9,6 +9,7 @@ import CustomButton from '../../components/CustomButton';
 import HomePage from '../HomePage';
 
 import { useNavigation } from '@react-navigation/native';
+import { HeaderBackButton } from '@react-navigation/stack'; // Import HeaderBackButton from react-navigation/stack
 import auth from "@react-native-firebase/auth";
 import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -71,6 +72,8 @@ const SignInScreen = () => {
   return (
     <GestureHandlerRootView> 
       <View style={styles.root}>
+        
+       
         <Image 
             source={Logo} 
             style={[styles.logo, {height: height*0.5}]}/>
