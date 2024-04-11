@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, Alert, TouchableOpacity } from 'react-native';
 import React from 'react';
-import Logo from "../../../assets/images/logo-bg-removed.png";
+import Logo from "../../assets/images/logo-bg-removed.png";
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 

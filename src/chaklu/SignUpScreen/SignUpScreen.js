@@ -1,6 +1,6 @@
 import { View, Text , Image,StyleSheet,useWindowDimensions} from 'react-native'
 import React,{useState} from 'react'
-import Logo from '../../../assets/images/Logo.png';
+import Logo from '../../assets/images/Logo.png';
 import CustomInput from '../../components/CustomInputChaklu';
 import CustomButton from '../../components/CustomButtonChaklu';
 

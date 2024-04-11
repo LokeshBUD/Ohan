@@ -17,7 +17,8 @@ const Profile = ({userData}) => {
   };
 
   const [image, setImage] = useState(null);
-
+  const [dateOfBirth, setDateOfBirth] = useState(""); 
+  
   const getdata = async () => {
     try {
       const usersCollection = firestore().collection('Users');
@@ -30,6 +31,8 @@ const Profile = ({userData}) => {
 
       snapshot.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
+        const user = doc.data(); // Get user data
+        setDateOfBirth(user.DOB || ""); // Set date of birth from user data
       });
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -41,12 +44,14 @@ const Profile = ({userData}) => {
       getdata();
     }
 
+    // Request permissions based on platform
     if (Platform.OS === 'android') {
       askForPermissions(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
     } else if (Platform.OS === 'ios') {
       askForPermissions(PERMISSIONS.IOS.MEDIA_LIBRARY);
     }
-  }, [userData]); // Run effect only when userData changes
+  }, [userData]);
+// Run effect only when userData changes
 
   const handleImageUpload = () => {
     launchImageLibrary({ mediaType: 'photo' }, response => {
@@ -82,6 +87,8 @@ const Profile = ({userData}) => {
 
         <Text style={styles.label}>Email:</Text>
         <Text style={styles.text}>{userData?.email}</Text>
+        <Text style={styles.label}>Date of birth:</Text>
+        <Text style={styles.text}>{dateOfBirth}</Text>
       </View>
       <Button title="Logout" onPress={handleLogout} />
     </View>

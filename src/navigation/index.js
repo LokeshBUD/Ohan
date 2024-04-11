@@ -8,6 +8,7 @@ import HomePage from '../screens/HomePage';
 import Academics from '../screens/Academics';
 import Profile from '../screens/Profile';
 import SignUpPage from '../screens/SignUpPage';
+import finishSignUpPage from '../screens/finishSignUppage/finishSignUpPage';
 import ForgetPassword from '../screens/ForgetPassword/ForgetPassword';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome, faBook, faUser, faLeaf } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +24,7 @@ const Navigation = () => {
         <Stack.Screen name="Signin" component={SignInScreen} options={{title:""}}/>
         <Stack.Screen name="forgotpass" component={ForgetPassword} options={{title:""}}/>
         <Stack.Screen name='SignUp' component={SignUpPage} options={{title:""}}/>
+        <Stack.Screen name="finishSignUp" component={finishSignUpPage} options={{title:""}}/>
         <Stack.Screen name='Profile' component={Profile} options={{title:""}}/>
         <Stack.Screen name="Home" component={Tabs} options={{headerShown:false,title:""}}/>
       </Stack.Navigator>

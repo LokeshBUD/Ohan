@@ -6,42 +6,43 @@ import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import Moment from 'moment';
 import auth from '@react-native-firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native'; // Import useRoute
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
 
-const SignUpPage = () => {
+const FinishSignUpPage = () => {
   const { height } = useWindowDimensions();
-  const [name, setname] = useState("");
-  const [date, setDate] = useState(""); // Initialize with empty string
-  const [email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
-  const [PasswordRepeat, setPasswordRepeat] = useState("");
+  const [date, setDate] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false); // State to control visibility of date picker
   const [selectedDate, setSelectedDate] = useState(new Date()); // State to hold the selected date
   const [showDoneButton, setShowDoneButton] = useState(false); // State to control visibility of "Done" button
   const navigation = useNavigation();
-
-  const onRegisterPressed = () => {
-    if (Password !== PasswordRepeat) {
-      Alert.alert("Passwords do not match");
-      return;
-    }
-    auth().createUserWithEmailAndPassword(email, Password)
-      .then(() => {
-        firestore().collection('Users').add({
-          name: name,
-          email: email,
-          DOB: date,
-          photo: "",
-        })
-        Alert.alert("Registration successful");
-        navigation.navigate(`Signin`);
-      })
-      .catch((error) => {
-        console.warn(error.message);
+  const route = useRoute(); // Use useRoute hook to access route params
+  const { userData } = route.params || {}; // Destructure userData from route.params
+  console.log("userData:", userData);
+  
+  const onRegisterPressed = async () => {
+    try {
+      // Update the DOB field in the Firestore document
+      let formattedDate = date.toString();
+      const usersRef = firestore().collection('Users');
+      const userQuerySnapshot = await usersRef.where('email', '==', userData.email).get();
+  
+      if (userQuerySnapshot.empty) {
+        console.log('No matching documents.');
+        return;
+      }
+  
+      userQuerySnapshot.forEach(async (doc) => {
+        await usersRef.doc(doc.id).update({ DOB: formattedDate });
       });
+      Alert.alert('Date of Birth Updated Successfully');
+      navigation.navigate("Home", {userData: userData});
+    } catch (error) {
+      console.error('Error updating date of birth:', error);
+      Alert.alert('Error', 'Failed to update Date of Birth');
+    }
   }
 
   const onTerms = () => {
@@ -52,7 +53,6 @@ const SignUpPage = () => {
     console.warn('privacy');
   }
 
-  // Handler for date change in date picker
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setSelectedDate(currentDate); // Update the selected date
@@ -63,24 +63,22 @@ const SignUpPage = () => {
     setShowDatePicker(false);
     setDate(Moment(selectedDate).format('YYYY-MM-DD')); // Set the selected date
   };
+
   useEffect(() =>{
     setDate("");
   },[])
 
   return (
     <GestureHandlerRootView>
-      <ScrollView contentContainerStyle={styles.scrollViewContent} horizontal={false}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Image source={Logo} style={[styles.logo, { height: height * .3 }]} />
-        <Text style={styles.title}>Create an account</Text>
-        <CustomInput title="Name" placeholder="Name" value={name} onChangeText={text => setname(text)} />
-        <CustomInput title="Email" placeholder="Email" value={email} onChangeText={text => setEmail(text)} />
-        <CustomInput title="Password" placeholder="Password" value={Password} onChangeText={text => setPassword(text)} secureTextEntry />
-        <CustomInput title="Repeat Password" placeholder="Repeat Password" value={PasswordRepeat} onChangeText={text => setPasswordRepeat(text)} secureTextEntry />
-        
+        <Text style={styles.title}>Enter Date of Birth</Text>
         <TouchableOpacity 
-        onPress={() => {setShowDatePicker(true) 
-                        setShowDoneButton(true)}} 
-        style={styles.scrollViewContent}>
+          onPress={() => {
+            setShowDatePicker(true);
+            setShowDoneButton(true);
+          }} 
+          style={styles.dateview}>
           <View pointerEvents="none">
             <CustomInput title="Date of Birth" placeholder="Date of Birth" value={date} style={styles.text} />
           </View>
@@ -134,8 +132,8 @@ const styles = StyleSheet.create({
   link: {
     color: '#FDB075',
   },
-  dateview:{
-    width: '100%'
+  dateview: {
+    width: '100%',
   },
   customInput: {
     height: 40,
@@ -144,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingLeft: 10,
     width: '100%',
-  }
+  },
 });
 
-export default SignUpPage;
+export default FinishSignUpPage;
