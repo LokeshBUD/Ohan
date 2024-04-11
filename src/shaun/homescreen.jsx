@@ -14,17 +14,17 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.title}>Welcome, { name }!</Text>
         <View style={styles.boxContainer}>
         <TouchableOpacity style={styles.boxWrapper} onPress={() => navigation.navigate('Details')}>
-          <Image source={require('./components/t1.jpg')} style={styles.boxImage}/>
-          <Text style={styles.boxText}>Book a Consultation</Text>
+          <Image source={require('./components/book.png')} style={styles.bookImage}/>
+          <Text style={styles.bookText}>Book a Consultation</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.boxWrapper} onPress={() => navigation.navigate('Details')}>
-          <Image source={require('./components/t1.jpg')} style={styles.Image}/>
+          <Image source={require('./components/acad.webp')} style={styles.Image}/>
           <Text style={styles.imageText}>Academics</Text>
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.boxWrapper} onPress={() => navigation.navigate('Details')}>
-          <Image source={require('./components/t1.jpg')} style={styles.Image}/>
+          <Image source={require('./components/part.jpg')} style={styles.Image}/>
           <Text style={styles.imageText}>Our Partners</Text>
         </TouchableOpacity>
         </View>
@@ -55,8 +55,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    marginTop: 10,
     marginBottom: 20,
   },
   boxContainer: {
@@ -64,12 +65,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
+    shadowColor: '#000000',
+    shadowOffset: { width: 10, height: 20 },
+    shadowOpacity: 1,
+    shadowRadius: 200,
   },
   boxWrapper: {
     margin: 10,
   },
 
-  boxText: {
+  bookText: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -78,16 +83,16 @@ const styles = StyleSheet.create({
     marginBottom: 45,
   },
 
-  boxImage: {
+  bookImage: {
     width: 370,
     height: 100,
     resizeMode: 'cover',
     borderRadius: 10,
-    opacity: 0.5,
-    shadowRadius: 10,
-    shadowOpacity: 1,
+    opacity: 0.7,
     shadowColor: '#000000',
-    shadowOffset: 15,
+    shadowOffset: { width: 10, height: 20 },
+    shadowOpacity: 1,
+    shadowRadius: 200,
   },
 
   Image: {
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'cover',
     borderRadius: 10,
-    opacity: 0.5,
+    opacity: 0.7,
   },
 
   imageText: {
