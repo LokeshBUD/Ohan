@@ -77,7 +77,8 @@ const SignInScreen = () => {
             console.log(userData)
             navigation.navigate('finishSignUp', { userData: userData });
           } else {
-            navigation.navigate("Home", {userData:userData});
+            console.log("HOME NAVIGATION",userData)
+            navigation.navigate("tabs", {userData:userData});
           }
         });
       }

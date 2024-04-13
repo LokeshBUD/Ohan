@@ -17,7 +17,9 @@ const FinishSignUpPage = () => {
   const [showDatePicker, setShowDatePicker] = useState(false); // State to control visibility of date picker
   const [selectedDate, setSelectedDate] = useState(new Date()); // State to hold the selected date
   const [showDoneButton, setShowDoneButton] = useState(false); // State to control visibility of "Done" button
+  
   const navigation = useNavigation();
+  
   const route = useRoute(); // Use useRoute hook to access route params
   const { userData } = route.params || {}; // Destructure userData from route.params
   console.log("userData:", userData);

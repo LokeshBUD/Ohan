@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Platform, Button, FlatList } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { request, PERMISSIONS } from 'react-native-permissions';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import DocumentPicker from 'react-native-document-picker';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import ProfileInfo from '../../components/profileInfo/ProfileInfo';
 
-const Profile = ({userData}) => {
-  // const route = useRoute();
-  // console.log(route)
-  // const { userData } = route.params || {}; // Initialize userData as an empty object if not provided
-  console.log(userData)
+const Profile = ({ userData }) => {
+  const [image, setImage] = useState(null);
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [selectedDocuments, setSelectedDocuments] = useState([]);
+
   const askForPermissions = permission => {
     request(permission).then(result => {
       console.log(result);
     });
   };
 
-  const [image, setImage] = useState(null);
-  const [dateOfBirth, setDateOfBirth] = useState(""); 
-  
   const getdata = async () => {
     try {
       const usersCollection = firestore().collection('Users');
@@ -31,8 +32,8 @@ const Profile = ({userData}) => {
 
       snapshot.forEach(doc => {
         console.log(doc.id, '=>', doc.data());
-        const user = doc.data(); // Get user data
-        setDateOfBirth(user.DOB || ""); // Set date of birth from user data
+        const user = doc.data();
+        setDateOfBirth(user.DOB || "");
       });
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -44,14 +45,12 @@ const Profile = ({userData}) => {
       getdata();
     }
 
-    // Request permissions based on platform
     if (Platform.OS === 'android') {
       askForPermissions(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
     } else if (Platform.OS === 'ios') {
       askForPermissions(PERMISSIONS.IOS.MEDIA_LIBRARY);
     }
   }, [userData]);
-// Run effect only when userData changes
 
   const handleImageUpload = () => {
     launchImageLibrary({ mediaType: 'photo' }, response => {
@@ -72,6 +71,23 @@ const Profile = ({userData}) => {
     navigation.navigate("Signin");
   };
 
+  const selectDoc = async () => {
+    try {
+      const doc = await DocumentPicker.pick();
+      setSelectedDocuments(prevDocs => [...prevDocs, doc]); // Add the selected document to the state
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const renderDocumentItem = ({ item }) => {
+    return (
+      <View style={styles.documentItem}>
+        <Text style={styles.documentName}>{item.name}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -81,16 +97,38 @@ const Profile = ({userData}) => {
           onPress={handleImageUpload}
         />
       </View>
-      <View style={styles.infoTable}>
-        <Text style={styles.label}>Name:</Text>
-        <Text style={styles.text}>{userData?.name}</Text>
 
-        <Text style={styles.label}>Email:</Text>
-        <Text style={styles.text}>{userData?.email}</Text>
-        <Text style={styles.label}>Date of birth:</Text>
-        <Text style={styles.text}>{dateOfBirth}</Text>
+      <View > 
+        <Text style={styles.label}>Personal Info</Text>
       </View>
-      <Button title="Logout" onPress={handleLogout} />
+      <View style={{marginLeft: '10%'}}>
+        <View style={styles.infoTable}>
+          <ProfileInfo icon="user" info={userData.name || "Name"} />
+          <ProfileInfo icon="envelope" info={userData.email || "Email"} />
+          <ProfileInfo icon="calendar" info={dateOfBirth || "Date of Birth"} />
+        </View>
+      </View>
+      
+      <View > 
+        <Text style={styles.label}> Documents</Text>
+      </View>
+      
+      <FlatList
+  horizontal
+  data={[{ id: 'uploadButton' }, ...selectedDocuments]}
+  renderItem={({ item }) => item.id === 'uploadButton' ? (
+    <TouchableOpacity style={styles.button} onPress={selectDoc}>
+      <FontAwesomeIcon icon={faPlus} size={20} color="white" />
+    </TouchableOpacity>
+  ) : (
+    <View style={styles.documentItem}>
+      <Text style={styles.documentName}>{item.name}</Text>
+    </View>
+  )}
+  keyExtractor={item => (item && item.id) ? item.id.toString() : Math.random().toString()}
+/>
+
+      <Button title="Logout" onPress={handleLogout}/>
     </View>
   );
 };
@@ -98,34 +136,49 @@ const Profile = ({userData}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'left',
     backgroundColor: '#FFFFFF',
-  
+    padding: 20,
   },
   imageContainer: {
     alignItems: 'center',
     marginBottom: 20,
-    paddingLeft: '25%',
   },
   infoTable: {
     marginBottom: 20,
-    alignItems: 'left',
-    paddingLeft: '5%'
+    padding: '3%',
+    borderRadius: 5,
+    backgroundColor: 'lightgray'
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  text: {
-    fontSize: 16,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   image: {
     width: 200,
     height: 200,
     borderRadius: 100,
     marginBottom: 10,
+  },
+  button: {
+    backgroundColor: 'blue',
+    borderRadius: 50,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    marginRight: 10,
+  },
+  documentItem: {
+    backgroundColor: 'lightgray',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+    marginRight: 10,
+  },
+  documentName: {
+    fontSize: 16,
   },
 });
 
