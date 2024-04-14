@@ -8,6 +8,9 @@ import DocumentPicker from 'react-native-document-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ProfileInfo from '../../components/profileInfo/ProfileInfo';
+import storage from '@react-native-firebase/storage';
+
+import { readFile } from 'react-native-fs';
 
 const Profile = ({ userData }) => {
   const [image, setImage] = useState(null);
@@ -74,11 +77,28 @@ const Profile = ({ userData }) => {
   const selectDoc = async () => {
     try {
       const doc = await DocumentPicker.pick();
-      setSelectedDocuments(prevDocs => [...prevDocs, doc]); // Add the selected document to the state
+      const documentRef = storage().ref(`documents/${doc.name}`);
+  
+      // Read file content for iOS
+      let fileContent = '';
+      if (Platform.OS === 'ios') {
+        fileContent = await readFile(doc.uri, 'base64');
+      }
+  
+      // Upload the document
+      if (Platform.OS === 'ios') {
+        await documentRef.putString(fileContent, 'base64');
+      } else {
+        await documentRef.putFile(doc.uri);
+      }
+  
+      const downloadURL = await documentRef.getDownloadURL();
+      setSelectedDocuments(prevDocs => [...prevDocs, { name: doc.name, url: downloadURL }]);
     } catch (err) {
       console.log(err);
     }
   };
+  
 
   const renderDocumentItem = ({ item }) => {
     return (
@@ -114,19 +134,19 @@ const Profile = ({ userData }) => {
       </View>
       
       <FlatList
-  horizontal
-  data={[{ id: 'uploadButton' }, ...selectedDocuments]}
-  renderItem={({ item }) => item.id === 'uploadButton' ? (
-    <TouchableOpacity style={styles.button} onPress={selectDoc}>
-      <FontAwesomeIcon icon={faPlus} size={20} color="white" />
-    </TouchableOpacity>
-  ) : (
-    <View style={styles.documentItem}>
-      <Text style={styles.documentName}>{item.name}</Text>
-    </View>
-  )}
-  keyExtractor={item => (item && item.id) ? item.id.toString() : Math.random().toString()}
-/>
+        horizontal
+        data={[{ id: 'uploadButton' }, ...selectedDocuments]}
+        renderItem={({ item }) => item.id === 'uploadButton' ? (
+          <TouchableOpacity style={styles.button} onPress={selectDoc}>
+            <FontAwesomeIcon icon={faPlus} size={20} color="white" />
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.documentItem}>
+            <Text style={styles.documentName}>{item.name}</Text>
+          </View>
+        )}
+        keyExtractor={item => (item && item.id) ? item.id.toString() : Math.random().toString()}
+      />
 
       <Button title="Logout" onPress={handleLogout}/>
     </View>

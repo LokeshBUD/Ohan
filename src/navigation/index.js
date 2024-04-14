@@ -8,7 +8,9 @@ import HomePage from '../screens/HomePage';
 import Academics from '../screens/Academics';
 import Profile from '../screens/Profile';
 import SignUpPage from '../screens/SignUpPage';
+
 import ProfileInfo from '../components/profileInfo/ProfileInfo';
+import test from '../screens/test/test';
 import finishSignUpPage from '../screens/finishSignUppage/finishSignUpPage';
 import ForgetPassword from '../screens/ForgetPassword/ForgetPassword';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
