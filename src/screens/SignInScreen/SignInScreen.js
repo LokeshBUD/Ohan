@@ -19,7 +19,7 @@ const SignInScreen = () => {
 
   useEffect(() =>{
     GoogleSignin.configure({
-      webClientId: '183581092368-5nfp08m01ltjrcvkp6mp96uks6aaig31.apps.googleusercontent.com',
+      webClientId: '183581092368-mvarg8vg7idp0lcar4vstkouq401cq26.apps.googleusercontent.com'
     });
   }, []);
 
