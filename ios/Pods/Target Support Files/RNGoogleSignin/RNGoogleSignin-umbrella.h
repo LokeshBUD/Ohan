@@ -13,6 +13,7 @@
 #import "RCTConvert+RNGoogleSignin.h"
 #import "RNGoogleSignin.h"
 #import "RNGoogleSignInButton.h"
+#import "RNGoogleSigninButtonPaper.h"
 
 FOUNDATION_EXPORT double RNGoogleSigninVersionNumber;
 FOUNDATION_EXPORT const unsigned char RNGoogleSigninVersionString[];

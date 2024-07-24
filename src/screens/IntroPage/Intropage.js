@@ -17,7 +17,7 @@ const Intropage = () => {
   
   const onNoSign = () => {
     console.warn("Let's go");
-    navigation.navigate(`Home`);
+    navigation.navigate(`tabs`);
   }
   
   return (
